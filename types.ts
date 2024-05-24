@@ -1,0 +1,51 @@
+export type User = {
+    id?: string,
+    username: string,
+    companyName?: string,
+    password?: string,
+    isAdmin: boolean,
+    license?: Date,
+    createdAt?: Date
+}
+
+export type Employee = {
+    id?: string,
+    name?: string,
+    NRIC?: string,
+    dob?: Date,
+    nationality?: "SC" | "Foreigner" | "PR",
+    citizenshipStatus?: "sc/pr3" | "pr1" | "pr2",
+    companyName?: string,
+    designation?: string,
+    basicPay?: number,
+    allowance?: number,
+    additionalPay?: number,
+    otPay?: number,
+    otHours?: number,
+    modeOfPayment?: "Cheque" | "Cash" | "BankDeposit",
+    typeOfContributionRate?: "FF" | "FG" | "GG",
+    joinDate?: Date,
+    resignDate?: Date, 
+    isResigned?: boolean,
+}
+
+export type Payslip = {
+    id?: string,
+    name: string,
+    NRIC: string,
+    dob: Date,
+    nationality: string,
+    citizenshipStatus: string,
+    companyName: string,
+    designation: string,
+    basicPay: number,
+    allowance: number,
+    additionalPay: number,
+    otPay: number,
+    otHours: number,
+    modeOfPayment: string,
+    typeOfContributionRate: string,
+    joinDate: Date,
+    resignDate: Date, 
+    isResigned: boolean,
+}
