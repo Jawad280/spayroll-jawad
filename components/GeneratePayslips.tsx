@@ -1,7 +1,7 @@
 import { getCpfContributionTotal } from "@/utils/calc";
 import { Employee } from "@/types";
 
-export function GeneratePayslips(employee: Employee) {
+export function generatePayslips(employee: Employee) {
   const calculateAge = (dob: Date | undefined): number | undefined => {
     if (!dob) {
       return undefined; // or handle the undefined case as needed
