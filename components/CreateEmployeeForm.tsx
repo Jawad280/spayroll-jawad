@@ -32,10 +32,10 @@ const CreateEmployeeForm = ({
     NRIC: z.string().trim().min(1, { message: "Field cannot be empty" }),
     dob: z.string().date(),
     nationality: z.enum(["SC", "PR", "Foreigner"]),
-    citizenshipStatus: z.enum(["sc/pr3", "pr1", "pr2"]).optional(),
+    citizenshipStatus: z.enum(["SCPR3", "SCPR1", "SCPR2"]).optional(),
     designation: z.string().trim().min(1, { message: "Field cannot be empty" }),
-    basicPay: z.coerce.number().min(0),
-    additionalPay: z.coerce.number().min(0),
+    ordinalWage: z.coerce.number().min(0),
+    additionalWage: z.coerce.number().min(0),
     allowance: z.coerce.number().min(0),
     otPay: z.coerce.number().min(0).default(0),
     otHours: z.coerce.number().min(0).default(0),
@@ -183,7 +183,7 @@ const CreateEmployeeForm = ({
                         </Label>
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="sc/pr3" />
+                            <RadioGroupItem value="SCPR3" />
                           </FormControl>
                           <FormLabel className="font-normal">
                             Singapore Citizen/3rd Permanent Resident
@@ -192,7 +192,7 @@ const CreateEmployeeForm = ({
 
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="pr1" />
+                            <RadioGroupItem value="SCPR1" />
                           </FormControl>
                           <FormLabel className="font-normal">
                             1st Permanent Resident
@@ -201,7 +201,7 @@ const CreateEmployeeForm = ({
 
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="pr2" />
+                            <RadioGroupItem value="SCPR2" />
                           </FormControl>
                           <FormLabel className="font-normal">
                             2nd Permanent Resident
@@ -230,12 +230,6 @@ const CreateEmployeeForm = ({
                         <Label className="font-bold text-[16px]">
                           Type of Contribution
                         </Label>
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="FF" />
-                          </FormControl>
-                          <FormLabel className="font-normal">FF</FormLabel>
-                        </FormItem>
 
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
@@ -324,7 +318,7 @@ const CreateEmployeeForm = ({
             <div className="flex gap-4">
               <FormField
                 control={form.control}
-                name="basicPay"
+                name="ordinalWage"
                 render={({ field }) => (
                   <FormItem className="mb-4">
                     <FormControl>
@@ -342,7 +336,7 @@ const CreateEmployeeForm = ({
 
               <FormField
                 control={form.control}
-                name="additionalPay"
+                name="additionalWage"
                 render={({ field }) => (
                   <FormItem className="mb-4">
                     <FormControl>
