@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useRouter } from "next/navigation";
-import { Employee } from "@/types";
+import { Employee, Payslip } from "@/types";
 import { generatePayslips } from "./generatePayslips";
 
 const PayslipForm = ({ employees }: { employees: Employee[] }) => {
@@ -23,6 +23,7 @@ const PayslipForm = ({ employees }: { employees: Employee[] }) => {
     monthYear: z.string().refine((val) => /^\d{4}-(0[1-9]|1[0-2])$/.test(val), {
       message: "Invalid month and year format",
     }),
+    dateOfPayment: z.string().date(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -30,6 +31,7 @@ const PayslipForm = ({ employees }: { employees: Employee[] }) => {
     mode: "onChange",
     defaultValues: {
       monthYear: new Date().toISOString().substring(0, 7),
+      dateOfPayment: new Date().toLocaleDateString(),
     },
   });
 
@@ -58,6 +60,23 @@ const PayslipForm = ({ employees }: { employees: Employee[] }) => {
                       Choose Month & Year
                     </Label>
                     <Input {...field} type="month" />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="dateOfPayment"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormControl>
+                  <div className="flex flex-col gap-2">
+                    <Label className="font-bold text-[16px]">
+                      Date of Payment
+                    </Label>
+                    <Input {...field} type="date" />
                   </div>
                 </FormControl>
                 <FormMessage />

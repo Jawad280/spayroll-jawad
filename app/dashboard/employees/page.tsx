@@ -24,6 +24,7 @@ const AllEmployees = () => {
       dob: new Date("2000-11-15"),
       NRIC: "T0077826A",
       designation: "Intern",
+      joinDate: new Date("2020-11-20"),
     },
     {
       id: "2",
@@ -31,6 +32,7 @@ const AllEmployees = () => {
       dob: new Date("1989-06-28"),
       NRIC: "S562178452",
       designation: "Manager",
+      joinDate: new Date("2004-11-21"),
     },
   ];
 

@@ -60,7 +60,7 @@ const CreateEmployeeForm = ({
   }
 
   return (
-    <div className="p-6 flex flex-col items-center gap-6 bg-slate-50 rounded-md w-4/5">
+    <div className="p-6 flex flex-col items-center gap-6 bg-slate-50 rounded-md max-w-screen">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -315,7 +315,7 @@ const CreateEmployeeForm = ({
               )}
             />
 
-            <div className="flex gap-4">
+            <div className="flex-col gap-4 md:flex-row md:gap-4 md:flex">
               <FormField
                 control={form.control}
                 name="ordinalWage"

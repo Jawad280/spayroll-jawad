@@ -8,6 +8,7 @@ export type User = {
     createdAt?: Date
 }
 
+// PK -> id
 export type Employee = {
     id?: string,
     name?: string,
@@ -29,23 +30,30 @@ export type Employee = {
     isResigned?: boolean,
 }
 
+
+// PK -> (monthYear, NRIC, companyName)
 export type Payslip = {
     id?: string,
-    name: string,
-    NRIC: string,
-    dob: Date,
-    nationality: string,
-    citizenshipStatus: string,
-    companyName: string,
-    designation: string,
-    basicPay: number,
-    allowance: number,
-    additionalPay: number,
-    otPay: number,
-    otHours: number,
-    modeOfPayment: string,
-    typeOfContributionRate: string,
-    joinDate: Date,
-    resignDate: Date, 
-    isResigned: boolean,
+    employeeCPF: number,
+    employerCPF: number,
+    totalCPF: number,
+    other?: string,
+    otherDeduction?: number,
+    monthYear: Date,
+    dateOfPayment?: Date,
+    ordinaryWage?: number,
+    allowance?: number,
+    additionalWage?: number,
+    otPay?: number,
+    otHours?: number,
+    modeOfPayment?: "Cheque" | "Cash" | "BankDeposit",
+    typeOfContributionRate?: "FG" | "GG",
+    name?: string,
+    NRIC?: string,
+    dob?: Date,
+    nationality?: string,
+    citizenshipStatus?: string,
+    companyName?: string,
+    designation?: string,
+    joinDate?: Date,
 }

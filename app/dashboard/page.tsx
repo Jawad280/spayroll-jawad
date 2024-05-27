@@ -1,5 +1,5 @@
 import PayslipForm from "@/components/PayslipForm";
-import { Employee, User } from "@/types";
+import { Employee } from "@/types";
 import React from "react";
 
 const Dashboard = () => {
