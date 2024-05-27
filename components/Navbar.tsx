@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
@@ -13,7 +14,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex p-6 bg-slate-800 justify-between">
+    <div className="flex p-6 bg-blue-900 justify-between items-center">
       <div className="gap-4 flex">
         <Link href="/dashboard" className={navStyle("/dashboard")}>
           Home
@@ -32,11 +33,11 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div>
-        <Link href="/" className="font-bold text-white">
+      <Button asChild variant={"secondary"}>
+        <Link href="/" className="font-bold">
           Temporary Logout
         </Link>
-      </div>
+      </Button>
     </div>
   );
 };

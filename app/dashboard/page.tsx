@@ -32,7 +32,9 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col items-center p-8 w-screen gap-6">
-      <div>Dashboard of Company</div>
+      <div className="flex justify-between w-full">
+        <div className="font-bold text-[28px]">Hello</div>
+      </div>
       <PayslipForm employees={sampleEmployees} />
     </div>
   );
