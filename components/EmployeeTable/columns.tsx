@@ -10,8 +10,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
@@ -21,12 +19,6 @@ async function handleDelete(emp: Employee) {
 }
 
 export const columns: ColumnDef<Employee>[] = [
-  {
-    header: "S/N",
-    cell: ({ row }) => {
-      return row.index + 1;
-    },
-  },
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -40,6 +32,13 @@ export const columns: ColumnDef<Employee>[] = [
         </Button>
       );
     },
+    sortingFn: (a, b) => {
+      const nameA: any = a.original.name?.toLowerCase();
+      const nameB: any = b.original.name?.toLowerCase();
+      if (nameA < nameB) return -1;
+      if (nameA > nameB) return 1;
+      return 0;
+    },
   },
   {
     accessorKey: "NRIC",
@@ -50,7 +49,7 @@ export const columns: ColumnDef<Employee>[] = [
     header: "DOB",
     cell: ({ row }) => {
       const date: Date = row.getValue("dob");
-      const formatted = date.toLocaleDateString();
+      const formatted = new Date(date).toLocaleDateString();
 
       return formatted;
     },
@@ -64,7 +63,7 @@ export const columns: ColumnDef<Employee>[] = [
     header: "Join Date",
     cell: ({ row }) => {
       const date: Date = row.getValue("joinDate");
-      const formatted = date.toLocaleDateString();
+      const formatted = new Date(date).toLocaleDateString();
 
       return formatted;
     },
@@ -77,7 +76,7 @@ export const columns: ColumnDef<Employee>[] = [
 
       if (emp.isResigned) {
         const date: Date = row.getValue("resignDate");
-        const formatted = date.toLocaleDateString();
+        const formatted = new Date(date).toLocaleDateString();
 
         return formatted;
       } else {

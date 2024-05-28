@@ -27,7 +27,7 @@ const page = ({ params }: { params: { slug: string } }) => {
   };
 
   return (
-    <div className="flex flex-col items-center p-8 w-screen gap-6">
+    <div className="flex flex-col items-center p-8 w-screen gap-6 bg-slate-400 h-screen">
       <div>
         <PayslipIndividual payslip={samplePayslip} />
       </div>

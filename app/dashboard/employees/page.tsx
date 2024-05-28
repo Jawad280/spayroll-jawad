@@ -5,14 +5,21 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/EmployeeTable/DataTable";
 import { columns } from "@/components/EmployeeTable/columns";
 import { Employee } from "@/types";
+import { GetAllEmployees } from "@/lib/serverFunctions";
 
 const AllEmployees = () => {
+  const { employees, error, isLoading } = GetAllEmployees("TEST");
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
+
+  const allEmployees: Employee[] = employees;
 
   if (isFormVisible) {
     return (
       <div className="flex flex-col items-center p-8">
-        <CreateEmployeeForm setIsFormVisible={setIsFormVisible} />
+        <CreateEmployeeForm
+          setIsFormVisible={setIsFormVisible}
+          companyName="TEST"
+        />
       </div>
     );
   }
@@ -46,7 +53,7 @@ const AllEmployees = () => {
       </div>
 
       <div className="py-10 w-full">
-        <DataTable columns={columns} data={sampleEmployees} />
+        <DataTable columns={columns} data={allEmployees} />
       </div>
     </div>
   );

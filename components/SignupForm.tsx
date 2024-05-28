@@ -13,6 +13,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { User } from "@/types";
 
 const SignupForm = ({
   setIsSignup,
@@ -20,9 +21,9 @@ const SignupForm = ({
   setIsSignup: (isSignup: boolean) => void;
 }) => {
   const formSchema = z.object({
-    username: z.string().trim().min(1, { message: "Field cannot be empty" }),
+    username: z.string().trim().min(1, { message: "Username cannot be empty" }),
     name: z.string().trim().min(1, { message: "Field cannot be empty" }),
-    password: z.string().min(1, { message: "Field cannot be empty" }),
+    password: z.string().min(1, { message: "Password cannot be empty" }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -36,9 +37,32 @@ const SignupForm = ({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    console.log("Account has been created");
-    setIsSignup(false);
+    const newUser: User = {
+      username: values.username,
+      companyName: values.name,
+      password: values.password,
+      isAdmin: true,
+    };
+
+    try {
+      const res = await fetch(`/api/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      if (res.ok) {
+        console.log("Created user");
+        setIsSignup(false);
+      } else {
+        const errorMessage = await res.text();
+        alert(errorMessage);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (

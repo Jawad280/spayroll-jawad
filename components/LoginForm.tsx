@@ -37,8 +37,10 @@ const LoginForm = ({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    console.log("Login Successful");
+    // console.log("Login Successful");
     // Check if user is admin -> route to /adminDashboard !!
+    const username = values.username;
+    const password = values.password;
     router.push("/dashboard");
   }
 

@@ -12,3 +12,85 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          String    @id @default(uuid())
+  username    String    @unique
+  companyName String
+  password    String
+  isAdmin     Boolean
+  license     DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+enum Nationality {
+  SC        @map("SC")
+  Foreigner @map("Foreigner")
+  PR        @map("PR")
+}
+
+enum CitizenshipStatus {
+  SCPR1     @map("SCPR1")
+  SCPR2     @map("SCPR2")
+  SCPR3     @map("SCPR3")
+  Foreigner @map("Foreigner")
+}
+
+enum ModeOfPayment {
+  Cheque      @map("Cheque")
+  Cash        @map("Cash")
+  BankDeposit @map("BankDeposit")
+}
+
+enum ContributionRate {
+  FG        @map("FG")
+  GG        @map("GG")
+  Foreigner @map("Foreigner")
+}
+
+model Employee {
+  id                     String            @id @default(uuid())
+  name                   String
+  NRIC                   String            @unique
+  dob                    DateTime
+  nationality            Nationality
+  citizenshipStatus      CitizenshipStatus
+  companyName            String
+  designation            String
+  ordinaryWage           Int
+  additionalWage         Int
+  allowance              Int
+  otPay                  Int
+  otHours                Int
+  modeOfPayment          ModeOfPayment
+  typeOfContributionRate ContributionRate?
+  joinDate               DateTime
+  isResigned             Boolean
+  resignDate             DateTime?
+}
+
+model Payslip {
+  id                     String            @id @default(uuid())
+  employeeCPF            Int
+  employerCPF            Int
+  totalCPF               Int
+  other                  String?
+  otherDeduction         Int
+  monthYear              DateTime
+  dateOfPayment          DateTime
+  ordinaryWage           Int
+  additionalWage         Int
+  allowance              Int
+  otPay                  Int
+  otHours                Int
+  modeOfPayment          ModeOfPayment
+  typeOfContributionRate ContributionRate
+  name                   String
+  NRIC                   String            @unique
+  dob                    DateTime
+  nationality            Nationality
+  citizenshipStatus      CitizenshipStatus
+  companyName            String
+  designation            String
+  joinDate               DateTime
+}

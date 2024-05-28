@@ -1,5 +1,7 @@
 "use client";
+
 import React, { useState } from "react";
+import { Employee } from "@/types";
 import {
   Form,
   FormControl,
@@ -17,16 +19,16 @@ import { Label } from "./ui/label";
 import { useRouter } from "next/navigation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "./ui/checkbox";
-import { Employee } from "@/types";
 
-const CreateEmployeeForm = ({
-  setIsFormVisible,
+const EditEmployeeForm = ({
+  employee,
   companyName,
 }: {
-  setIsFormVisible: (isFormVisible: boolean) => void;
+  employee: Employee;
   companyName: string;
 }) => {
   const router = useRouter();
+
   const [isForeigner, setIsForeigner] = useState<boolean>(true);
   const [isPR, setIsPR] = useState<boolean>(false);
   const [isResignedSelected, setIsResignedSelected] = useState<boolean>(false);
@@ -43,12 +45,12 @@ const CreateEmployeeForm = ({
     ordinaryWage: z.coerce.number().min(0),
     additionalWage: z.coerce.number().min(0),
     allowance: z.coerce.number().min(0),
-    otPay: z.coerce.number().min(0).default(0),
-    otHours: z.coerce.number().min(0).default(0),
+    otPay: z.coerce.number().min(0),
+    otHours: z.coerce.number().min(0),
     modeOfPayment: z.enum(["Cheque", "Cash", "BankDeposit"]),
     typeOfContribution: z.enum(["FG", "GG", "Foreigner"]).optional(),
     joinDate: z.string().date(),
-    isResgined: z.boolean().default(false),
+    isResgined: z.boolean(),
     resignDate: z.string().date().optional(),
   });
 
@@ -56,7 +58,28 @@ const CreateEmployeeForm = ({
     resolver: zodResolver(formSchema),
     mode: "onChange",
     defaultValues: {
-      name: "",
+      name: employee?.name || "",
+      NRIC: employee?.NRIC || "",
+      dob: employee.dob
+        ? new Date(employee.dob).toISOString().substring(0, 10)
+        : new Date().toISOString().substring(0, 10),
+      nationality: employee?.nationality || "Foreigner",
+      citizenshipStatus: employee?.citizenshipStatus || "Foreigner",
+      designation: employee?.designation || "",
+      ordinaryWage: employee?.ordinaryWage || 0,
+      additionalWage: employee?.additionalWage || 0,
+      allowance: employee?.allowance || 0,
+      otPay: employee?.otPay || 0,
+      otHours: employee?.otHours || 0,
+      modeOfPayment: employee.modeOfPayment || "BankDeposit",
+      typeOfContribution: employee?.typeOfContributionRate || "Foreigner",
+      joinDate: employee.joinDate
+        ? new Date(employee.joinDate).toISOString().substring(0, 10)
+        : new Date().toISOString().substring(0, 10),
+      isResgined: employee?.isResigned || false,
+      resignDate: employee.resignDate
+        ? new Date(employee.resignDate).toISOString().substring(0, 10)
+        : new Date().toISOString().substring(0, 10),
     },
   });
 
@@ -70,7 +93,7 @@ const CreateEmployeeForm = ({
       resignDate = new Date();
     }
 
-    const newEmployee: Employee = {
+    const updatedEmployee: Employee = {
       name: values.name,
       dob: dob,
       NRIC: values.NRIC,
@@ -90,21 +113,18 @@ const CreateEmployeeForm = ({
       resignDate: resignDate,
     };
 
-    console.log("New Employee");
-    console.log(newEmployee);
-
     try {
-      const res = await fetch(`/api/employees`, {
-        method: "POST",
+      const res = await fetch(`/api/employees/${employee.id}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newEmployee),
+        body: JSON.stringify(updatedEmployee),
       });
 
       if (res.ok) {
         console.log("Created Employee");
-        setIsFormVisible(false);
+        router.push(`/dashboard/employees`);
       } else {
         const errorMessage = await res.text();
         alert(errorMessage);
@@ -112,6 +132,10 @@ const CreateEmployeeForm = ({
     } catch (e) {
       console.error(e);
     }
+  }
+
+  async function handleCancel() {
+    router.push(`/dashboard/employees`);
   }
 
   return (
@@ -164,7 +188,7 @@ const CreateEmployeeForm = ({
                       <Label className="font-bold text-[16px]">
                         Date of Birth
                       </Label>
-                      <Input {...field} type="date" />
+                      <Input {...field} type="date" value={field.value} />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -532,7 +556,7 @@ const CreateEmployeeForm = ({
               <Button
                 className="mt-4"
                 variant="destructive"
-                onClick={() => setIsFormVisible(false)}
+                onClick={handleCancel}
               >
                 Cancel
               </Button>
@@ -544,4 +568,4 @@ const CreateEmployeeForm = ({
   );
 };
 
-export default CreateEmployeeForm;
+export default EditEmployeeForm;
