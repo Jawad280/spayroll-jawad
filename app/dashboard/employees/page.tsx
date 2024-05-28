@@ -6,9 +6,14 @@ import { DataTable } from "@/components/EmployeeTable/DataTable";
 import { columns } from "@/components/EmployeeTable/columns";
 import { Employee } from "@/types";
 import { GetAllEmployees } from "@/lib/serverFunctions";
+import { useUser } from "@/components/UserContext";
 
 const AllEmployees = () => {
-  const { employees, error, isLoading } = GetAllEmployees("TEST");
+  const user = useUser();
+
+  const { employees, error, isLoading } = GetAllEmployees(
+    user?.companyName || ""
+  );
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
 
   const allEmployees: Employee[] = employees;
@@ -18,7 +23,7 @@ const AllEmployees = () => {
       <div className="flex flex-col items-center p-8">
         <CreateEmployeeForm
           setIsFormVisible={setIsFormVisible}
-          companyName="TEST"
+          companyName={user?.companyName || ""}
         />
       </div>
     );

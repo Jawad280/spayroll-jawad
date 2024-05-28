@@ -13,18 +13,17 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { User } from "@/types";
 
-const LoginForm = ({
-  setIsSignup,
+const CreateCompany = ({
+  setIsFormVisible,
 }: {
-  setIsSignup: (isSignup: boolean) => void;
+  setIsFormVisible: (isFormVisible: boolean) => void;
 }) => {
-  const router = useRouter();
   const formSchema = z.object({
-    username: z.string().trim().min(1, { message: "Field cannot be empty" }),
-    password: z.string().min(1, { message: "Field cannot be empty" }),
+    username: z.string().trim().min(1, { message: "Username cannot be empty" }),
+    companyName: z.string().trim().min(1, { message: "Field cannot be empty" }),
+    password: z.string().min(1, { message: "Password cannot be empty" }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -32,28 +31,37 @@ const LoginForm = ({
     mode: "onChange",
     defaultValues: {
       username: "",
+      companyName: "",
       password: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const username = values.username;
-    const password = values.password;
+    const newUser: User = {
+      username: values.username,
+      companyName: values.companyName,
+      password: values.password,
+      isAdmin: false,
+    };
 
     try {
-      const result = await signIn("credentials", {
-        redirect: false,
-        username,
-        password,
+      const res = await fetch(`/api/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
       });
 
-      if (result?.error) {
-        alert(result.error);
+      if (res.ok) {
+        console.log("Created user");
+        setIsFormVisible(false);
       } else {
-        router.push("/dashboard");
+        const errorMessage = await res.text();
+        alert(errorMessage);
       }
     } catch (e) {
-      alert("An unexpected error occurred. Please try again.");
+      console.log(e);
     }
   }
 
@@ -70,6 +78,23 @@ const LoginForm = ({
                   <div className="flex flex-col gap-2">
                     <Label className="font-bold text-[16px]">Username</Label>
                     <Input placeholder="Enter username..." {...field} />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="companyName"
+            render={({ field }) => (
+              <FormItem className="my-4">
+                <FormControl>
+                  <div className="flex flex-col gap-2">
+                    <Label className="font-bold text-[16px]">
+                      Company Name
+                    </Label>
+                    <Input placeholder="Enter company name..." {...field} />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -97,14 +122,14 @@ const LoginForm = ({
           />
           <div className="flex flex-col">
             <Button className="mt-4" variant="default" type="submit">
-              Login
+              Sign Up
             </Button>
             <Button
               className="mt-4"
-              variant="link"
-              onClick={() => setIsSignup(true)}
+              variant="destructive"
+              onClick={() => setIsFormVisible(false)}
             >
-              Sign Up
+              Cancel
             </Button>
           </div>
         </form>
@@ -113,4 +138,4 @@ const LoginForm = ({
   );
 };
 
-export default LoginForm;
+export default CreateCompany;

@@ -22,7 +22,7 @@ const SignupForm = ({
 }) => {
   const formSchema = z.object({
     username: z.string().trim().min(1, { message: "Username cannot be empty" }),
-    name: z.string().trim().min(1, { message: "Field cannot be empty" }),
+    companyName: z.string().trim().min(1, { message: "Field cannot be empty" }),
     password: z.string().min(1, { message: "Password cannot be empty" }),
   });
 
@@ -31,7 +31,7 @@ const SignupForm = ({
     mode: "onChange",
     defaultValues: {
       username: "",
-      name: "",
+      companyName: "",
       password: "",
     },
   });
@@ -39,7 +39,7 @@ const SignupForm = ({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const newUser: User = {
       username: values.username,
-      companyName: values.name,
+      companyName: values.companyName,
       password: values.password,
       isAdmin: true,
     };
@@ -86,13 +86,15 @@ const SignupForm = ({
           />
           <FormField
             control={form.control}
-            name="name"
+            name="companyName"
             render={({ field }) => (
               <FormItem className="my-4">
                 <FormControl>
                   <div className="flex flex-col gap-2">
-                    <Label className="font-bold text-[16px]">Name</Label>
-                    <Input placeholder="Enter name..." {...field} />
+                    <Label className="font-bold text-[16px]">
+                      Company Name
+                    </Label>
+                    <Input placeholder="Enter company name..." {...field} />
                   </div>
                 </FormControl>
                 <FormMessage />

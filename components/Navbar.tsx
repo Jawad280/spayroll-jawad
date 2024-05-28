@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 const Navbar = () => {
   const path = usePathname();
@@ -33,10 +34,8 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <Button asChild variant={"secondary"}>
-        <Link href="/" className="font-bold">
-          Temporary Logout
-        </Link>
+      <Button variant={"secondary"} onClick={() => signOut()}>
+        Logout
       </Button>
     </div>
   );

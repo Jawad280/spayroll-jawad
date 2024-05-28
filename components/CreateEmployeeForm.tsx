@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "./ui/checkbox";
 import { Employee } from "@/types";
+import { mutate } from "swr";
 
 const CreateEmployeeForm = ({
   setIsFormVisible,
@@ -91,7 +92,6 @@ const CreateEmployeeForm = ({
     };
 
     console.log("New Employee");
-    console.log(newEmployee);
 
     try {
       const res = await fetch(`/api/employees`, {
@@ -103,7 +103,7 @@ const CreateEmployeeForm = ({
       });
 
       if (res.ok) {
-        console.log("Created Employee");
+        mutate("/api/employees");
         setIsFormVisible(false);
       } else {
         const errorMessage = await res.text();

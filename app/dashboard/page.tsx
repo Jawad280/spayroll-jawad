@@ -1,41 +1,46 @@
+"use client";
 import PayslipForm from "@/components/PayslipForm";
-import { Employee } from "@/types";
-import React from "react";
+import React, { useState } from "react";
+import { GetAllEmployees } from "@/lib/serverFunctions";
+import { useUser } from "@/components/UserContext";
+import { Button } from "@/components/ui/button";
+import CreateCompany from "@/components/CreateCompany";
 
 const Dashboard = () => {
-  const sampleEmployees: Employee[] = [
-    {
-      id: "1",
-      name: "Jawad",
-      dob: new Date("2000-11-15"),
-      NRIC: "T0077826A",
-      designation: "Intern",
-      nationality: "SC",
-      citizenshipStatus: "SCPR3",
-      ordinaryWage: 2000,
-      additionalWage: 200,
-      typeOfContributionRate: "GG",
-    },
-    {
-      id: "2",
-      name: "Michael",
-      dob: new Date("1989-06-28"),
-      NRIC: "S562178452",
-      designation: "Manager",
-      nationality: "SC",
-      citizenshipStatus: "SCPR3",
-      ordinaryWage: 4000,
-      additionalWage: 0,
-      typeOfContributionRate: "GG",
-    },
-  ];
+  const user = useUser();
+  const [isFormVisible, setIsFormVisible] = useState<Boolean>(false);
+
+  if (user?.isAdmin) {
+    if (isFormVisible) {
+      return (
+        <div className="flex flex-col items-center p-8 w-screen gap-6">
+          <CreateCompany setIsFormVisible={setIsFormVisible} />
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex flex-col items-center p-8 w-screen gap-6">
+        <div className="flex justify-between w-full">
+          <div className="font-bold text-[28px]">Company Table</div>
+          <Button onClick={() => setIsFormVisible(true)} variant="default">
+            + Create a Company Account
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const { employees, isLoading, error } = GetAllEmployees(
+    user?.companyName || ""
+  );
 
   return (
     <div className="flex flex-col items-center p-8 w-screen gap-6">
       <div className="flex justify-between w-full">
-        <div className="font-bold text-[28px]">Hello</div>
+        <div className="font-bold text-[28px]">Hello {user?.companyName}</div>
       </div>
-      <PayslipForm employees={sampleEmployees} />
+      <PayslipForm employees={employees} />
     </div>
   );
 };
