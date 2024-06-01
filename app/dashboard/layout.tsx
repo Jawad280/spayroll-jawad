@@ -23,7 +23,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     return <div>LOADING.............</div>;
   }
 
-  const user: User = session.data?.user?.name;
+  const user: any = session.data?.user?.name;
 
   return (
     <UserProvider user={user}>

@@ -18,6 +18,8 @@ const AllEmployees = () => {
 
   const allEmployees: Employee[] = employees;
 
+  console.log(allEmployees);
+
   if (isFormVisible) {
     return (
       <div className="flex flex-col items-center p-8">
@@ -28,25 +30,6 @@ const AllEmployees = () => {
       </div>
     );
   }
-
-  const sampleEmployees: Employee[] = [
-    {
-      id: "1",
-      name: "Jawad",
-      dob: new Date("2000-11-15"),
-      NRIC: "T0077826A",
-      designation: "Intern",
-      joinDate: new Date("2020-11-20"),
-    },
-    {
-      id: "2",
-      name: "Michael",
-      dob: new Date("1989-06-28"),
-      NRIC: "S562178452",
-      designation: "Manager",
-      joinDate: new Date("2004-11-21"),
-    },
-  ];
 
   return (
     <div className="flex flex-col items-center p-8 w-screen gap-6">

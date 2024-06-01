@@ -23,3 +23,13 @@ export async function PATCH(req: NextRequest, { params } : { params: { id: strin
 
     return NextResponse.json(updatedEmployee)
 }
+
+export async function DELETE(req: NextRequest, { params } : { params: { id: string } }) {
+    const employee = await db.employee.delete({
+        where: {
+            id: params.id
+        }
+    })
+
+    return NextResponse.json(employee)    
+}

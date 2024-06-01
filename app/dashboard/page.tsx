@@ -1,20 +1,29 @@
 "use client";
 import PayslipForm from "@/components/PayslipForm";
 import React, { useState } from "react";
-import { GetAllEmployees } from "@/lib/serverFunctions";
+import { GetAllEmployees, GetCompanies } from "@/lib/serverFunctions";
 import { useUser } from "@/components/UserContext";
 import { Button } from "@/components/ui/button";
 import CreateCompany from "@/components/CreateCompany";
+import { User } from "@/types";
+import CompanyTable from "@/components/CompanyTable/CompanyTable";
+import { columns } from "@/components/CompanyTable/companyColumns";
 
 const Dashboard = () => {
   const user = useUser();
   const [isFormVisible, setIsFormVisible] = useState<Boolean>(false);
 
+  const {
+    companies,
+    isLoading: companiesLoading,
+    error: companiesError,
+  } = GetCompanies(user?.id || "");
+
   if (user?.isAdmin) {
     if (isFormVisible) {
       return (
         <div className="flex flex-col items-center p-8 w-screen gap-6">
-          <CreateCompany setIsFormVisible={setIsFormVisible} />
+          <CreateCompany setIsFormVisible={setIsFormVisible} user={user} />
         </div>
       );
     }
@@ -27,6 +36,8 @@ const Dashboard = () => {
             + Create a Company Account
           </Button>
         </div>
+
+        <CompanyTable columns={columns} data={companies || []} />
       </div>
     );
   }

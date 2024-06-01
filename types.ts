@@ -5,7 +5,10 @@ export type User = {
     password?: string,
     isAdmin: boolean,
     license?: Date,
-    createdAt?: Date
+    createdAt?: Date,
+    adminId?: string,
+    admin?: User,
+    companies?: User[]
 }
 
 // PK -> id

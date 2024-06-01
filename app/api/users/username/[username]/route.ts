@@ -5,6 +5,9 @@ export async function GET(req: NextRequest, { params } : { params: { username: s
     const user = await db.user.findUnique({
         where: {
             username: params.username
+        },
+        include: {
+            companies: true
         }
     })
 

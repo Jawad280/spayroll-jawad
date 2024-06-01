@@ -21,6 +21,11 @@ model User {
   isAdmin     Boolean
   license     DateTime?
   createdAt   DateTime  @default(now())
+
+  // Self-referential relationship
+  adminId   String?
+  admin     User?   @relation("UserToManagedUsers", fields: [adminId], references: [id])
+  companies User[]  @relation("UserToManagedUsers")
 }
 
 enum Nationality {

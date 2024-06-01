@@ -13,9 +13,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { mutate } from "swr";
 
 async function handleDelete(emp: Employee) {
-  console.log("Deleting Employee", emp.name);
+  try {
+    const res = await fetch(`/api/employees/${emp.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    res.status === 200;
+    mutate(`/api/employees`);
+    alert("DELETION COMPLETE");
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 export const columns: ColumnDef<Employee>[] = [

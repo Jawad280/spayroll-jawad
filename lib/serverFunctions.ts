@@ -1,5 +1,6 @@
 'use client'
 
+import { User } from '@/types';
 import useSWR from 'swr'
 export const apiUrl = process.env.NEXT_PUBLIC_SITE_URL
 
@@ -28,3 +29,16 @@ export function GetEmployee(id: string) {
         error
     }
 }
+
+export function GetCompanies(adminId: string) {
+    const { data, error, isLoading } = useSWR(`/api/users/${adminId}`, fetcher)
+
+    const adminUser: User = data
+
+    return {
+        companies: adminUser?.companies || [],
+        isLoading,
+        error
+    }
+}
+

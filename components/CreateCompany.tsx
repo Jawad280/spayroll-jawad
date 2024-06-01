@@ -14,11 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { User } from "@/types";
+import { mutate } from "swr";
 
 const CreateCompany = ({
   setIsFormVisible,
+  user,
 }: {
   setIsFormVisible: (isFormVisible: boolean) => void;
+  user: User;
 }) => {
   const formSchema = z.object({
     username: z.string().trim().min(1, { message: "Username cannot be empty" }),
@@ -42,6 +45,7 @@ const CreateCompany = ({
       companyName: values.companyName,
       password: values.password,
       isAdmin: false,
+      adminId: user.id,
     };
 
     try {
@@ -56,6 +60,7 @@ const CreateCompany = ({
       if (res.ok) {
         console.log("Created user");
         setIsFormVisible(false);
+        mutate(`/api/users`);
       } else {
         const errorMessage = await res.text();
         alert(errorMessage);
