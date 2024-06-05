@@ -18,7 +18,7 @@ export function generatePayslips(employee: Employee) {
     return age;
   };
 
-  const age: number | undefined = calculateAge(employee.dob);
+  const age: number | undefined = calculateAge(new Date(employee.dob || ""));
 
   if (employee.nationality == "Foreigner") {
     return getCpfContributionTotal(

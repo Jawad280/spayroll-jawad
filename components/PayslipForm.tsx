@@ -30,19 +30,70 @@ const PayslipForm = ({ employees }: { employees: Employee[] }) => {
     resolver: zodResolver(formSchema),
     mode: "onChange",
     defaultValues: {
-      monthYear: new Date().toISOString().substring(0, 7),
-      dateOfPayment: new Date().toLocaleDateString(),
+      // monthYear: new Date().toISOString().substring(0, 7),
+      // dateOfPayment: new Date().toLocaleDateString(),
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
 
-    const result = employees.map((emp: Employee) => {
-      generatePayslips(emp);
+    // Create a payslip for each employee
+    const payslips = employees.map((employee: Employee) => {
+      console.log(employee);
+      const result = generatePayslips(employee);
+
+      const employeeCPF = result?.employeeCPF || 0;
+      const totalCPF = result?.totalCPF || 0;
+      const employerCPF = totalCPF - employeeCPF;
+      const dateOfPayment = new Date(values.dateOfPayment);
+
+      const payslip: Payslip = {
+        employeeCPF: employeeCPF,
+        employerCPF: employerCPF,
+        totalCPF: totalCPF,
+        monthYear: values.monthYear,
+        dateOfPayment: dateOfPayment,
+        ordinaryWage: employee.ordinaryWage,
+        additionalWage: employee.additionalWage,
+        allowance: employee.allowance,
+        otPay: employee.otPay,
+        otHours: employee.otHours,
+        modeOfPayment: employee.modeOfPayment,
+        typeOfContributionRate: employee.typeOfContributionRate,
+        name: employee.name,
+        NRIC: employee.NRIC,
+        dob: employee.dob,
+        nationality: employee.nationality,
+        citizenshipStatus: employee.citizenshipStatus,
+        companyName: employee.companyName,
+        designation: employee.designation,
+        joinDate: employee.joinDate,
+      };
+      console.log(payslip);
+      return payslip;
     });
 
-    console.log(result);
+    try {
+      const res = await fetch(`/api/payslips`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payslips),
+      });
+
+      if (res.ok) {
+        console.log(res);
+        router.push(`/dashboard/payslips/date/${values.monthYear}`);
+      } else {
+        const errorMessage = await res.text();
+        console.log(errorMessage);
+        alert(errorMessage);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (

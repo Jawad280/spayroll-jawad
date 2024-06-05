@@ -42,3 +42,22 @@ export function GetCompanies(adminId: string) {
     }
 }
 
+export function GetAllPayslips(monthYear: string) {
+    const { data, error, isLoading } = useSWR(`/api/payslips/monthYear/${monthYear}`, fetcher)
+
+    return {
+        payslips: data || [],
+        isLoading,
+        error
+    }    
+}
+
+export function GetIndividualPayslip(id: string) {
+    const { data, error, isLoading } = useSWR(`/api/payslips/${id}`, fetcher)
+
+    return {
+        payslip: data,
+        isLoading,
+        error
+    } 
+}

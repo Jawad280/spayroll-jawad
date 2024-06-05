@@ -21,7 +21,7 @@ const PayslipIndividual = ({ payslip }: { payslip: Payslip }) => {
   }
 
   function fromToDate() {
-    const paymentDate = payslip.monthYear;
+    const paymentDate = new Date(payslip.monthYear);
 
     const year = paymentDate.getFullYear();
     const month = paymentDate.getMonth();
@@ -157,7 +157,7 @@ const PayslipIndividual = ({ payslip }: { payslip: Payslip }) => {
               Date of Payment
             </div>
             <div className="text-[12px]">
-              {payslip.dateOfPayment?.toLocaleDateString()}
+              {new Date(payslip?.dateOfPayment || "").toLocaleDateString()}
             </div>
           </div>
 

@@ -81,7 +81,7 @@ model Payslip {
   totalCPF               Int
   other                  String?
   otherDeduction         Int
-  monthYear              DateTime
+  monthYear              String
   dateOfPayment          DateTime
   ordinaryWage           Int
   additionalWage         Int
@@ -91,11 +91,13 @@ model Payslip {
   modeOfPayment          ModeOfPayment
   typeOfContributionRate ContributionRate
   name                   String
-  NRIC                   String            @unique
+  NRIC                   String
   dob                    DateTime
   nationality            Nationality
   citizenshipStatus      CitizenshipStatus
   companyName            String
   designation            String
   joinDate               DateTime
+
+  @@unique([NRIC, monthYear, companyName])
 }
