@@ -31,6 +31,7 @@ export type Employee = {
     joinDate?: Date,
     resignDate?: Date, 
     isResigned?: boolean,
+    companyId?: string
 }
 
 
@@ -59,4 +60,5 @@ export type Payslip = {
     companyName?: string,
     designation?: string,
     joinDate?: Date,
+    employeeId?: string
 }

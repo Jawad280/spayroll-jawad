@@ -4,24 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { User } from "@/types";
 import { Button } from "../ui/button";
 import { ArrowUpDown, TrashIcon } from "lucide-react";
-import { mutate } from "swr";
-
-async function handleDelete(user: User) {
-  try {
-    const res = await fetch(`/api/users/${user.id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    res.status === 200;
-    mutate(`/api/users`);
-    alert("DELETION COMPLETE");
-  } catch (e) {
-    console.error(e);
-  }
-}
+import { DeleteAlert } from "./DeleteAlert";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -54,13 +37,7 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const user = row.original;
 
-      return (
-        <TrashIcon
-          onClick={() => handleDelete(user)}
-          size={18}
-          className="cursor-pointer"
-        />
-      );
+      return <DeleteAlert user={user} />;
     },
   },
 ];

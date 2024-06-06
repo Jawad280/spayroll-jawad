@@ -23,9 +23,11 @@ import { mutate } from "swr";
 const CreateEmployeeForm = ({
   setIsFormVisible,
   companyName,
+  companyId,
 }: {
   setIsFormVisible: (isFormVisible: boolean) => void;
   companyName: string;
+  companyId: string;
 }) => {
   const router = useRouter();
   const [isForeigner, setIsForeigner] = useState<boolean>(true);
@@ -89,9 +91,8 @@ const CreateEmployeeForm = ({
       joinDate: joinDate,
       isResigned: values.isResgined,
       resignDate: resignDate,
+      companyId: companyId,
     };
-
-    console.log("New Employee");
 
     try {
       const res = await fetch(`/api/employees`, {

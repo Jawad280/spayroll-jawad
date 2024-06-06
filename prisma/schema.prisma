@@ -26,6 +26,8 @@ model User {
   adminId   String?
   admin     User?   @relation("UserToManagedUsers", fields: [adminId], references: [id])
   companies User[]  @relation("UserToManagedUsers")
+
+  employees Employee[]
 }
 
 enum Nationality {
@@ -72,6 +74,11 @@ model Employee {
   joinDate               DateTime
   isResigned             Boolean
   resignDate             DateTime?
+
+  company   User?   @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId String?
+
+  payslips Payslip[]
 }
 
 model Payslip {
@@ -98,6 +105,9 @@ model Payslip {
   companyName            String
   designation            String
   joinDate               DateTime
+
+  employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  employeeId String?
 
   @@unique([NRIC, monthYear, companyName])
 }

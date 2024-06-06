@@ -26,6 +26,7 @@ const AllEmployees = () => {
         <CreateEmployeeForm
           setIsFormVisible={setIsFormVisible}
           companyName={user?.companyName || ""}
+          companyId={user?.id || ""}
         />
       </div>
     );

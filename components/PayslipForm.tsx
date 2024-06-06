@@ -36,11 +36,8 @@ const PayslipForm = ({ employees }: { employees: Employee[] }) => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-
     // Create a payslip for each employee
     const payslips = employees.map((employee: Employee) => {
-      console.log(employee);
       const result = generatePayslips(employee);
 
       const employeeCPF = result?.employeeCPF || 0;
@@ -69,8 +66,8 @@ const PayslipForm = ({ employees }: { employees: Employee[] }) => {
         companyName: employee.companyName,
         designation: employee.designation,
         joinDate: employee.joinDate,
+        employeeId: employee.id,
       };
-      console.log(payslip);
       return payslip;
     });
 
@@ -84,11 +81,9 @@ const PayslipForm = ({ employees }: { employees: Employee[] }) => {
       });
 
       if (res.ok) {
-        console.log(res);
         router.push(`/dashboard/payslips/date/${values.monthYear}`);
       } else {
         const errorMessage = await res.text();
-        console.log(errorMessage);
         alert(errorMessage);
       }
     } catch (e) {
