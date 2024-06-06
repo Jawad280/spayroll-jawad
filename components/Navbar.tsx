@@ -18,7 +18,7 @@ const Navbar = () => {
 
   if (user?.isAdmin) {
     return (
-      <div className="flex p-6 bg-blue-900 justify-between items-center">
+      <div className="flex p-6 bg-blue-900 justify-between items-center print:hidden">
         <div className="gap-4 flex">
           <Link href="/dashboard" className={navStyle("/dashboard")}>
             Home
@@ -33,7 +33,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="flex p-6 bg-blue-900 justify-between items-center">
+    <div className="flex p-6 bg-blue-900 justify-between items-center print:hidden">
       <div className="gap-4 flex">
         <Link href="/dashboard" className={navStyle("/dashboard")}>
           Home
