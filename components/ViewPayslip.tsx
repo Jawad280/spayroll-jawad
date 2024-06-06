@@ -47,7 +47,7 @@ const ViewPayslip = ({ payslip }: { payslip: Payslip }) => {
   }
 
   return (
-    <div className="h-[14.85cm] w-full flex items-center py-12 box-border bg-white">
+    <div className="h-[14.85cm] w-full flex items-center py-12 box-border">
       <div className="flex flex-col gap-5 h-full w-[10.5cm] pl-12 pr-2">
         <div className="font-bold text-[24px] h-[45px]">Itemised Payslip</div>
 

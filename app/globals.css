@@ -75,13 +75,15 @@
     }
   }
 
+  @page { size: A4;  margin: 0; padding: 0; }
+
   @media print {
     body * {
       visibility: hidden;
     }
-    #print-content,
-    #print-content * {
+
+    #print-content, #print-content * {
       visibility: visible;
       print-color-adjust: exact;
     }
-}
+  }

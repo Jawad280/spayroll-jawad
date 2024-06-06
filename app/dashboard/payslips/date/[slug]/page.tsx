@@ -5,6 +5,7 @@ import { PayslipTable } from "@/components/PayslipTable/PayslipTable";
 import { columns } from "@/components/PayslipTable/columns";
 import { Button } from "@/components/ui/button";
 import { GetAllPayslips } from "@/lib/serverFunctions";
+import { ArrowLeft, Printer } from "lucide-react";
 import React, { useState } from "react";
 
 const page = ({ params }: { params: { slug: string } }) => {
@@ -17,22 +18,24 @@ const page = ({ params }: { params: { slug: string } }) => {
 
   if (isAll) {
     return (
-      <div className="flex flex-col items-center p-8 w-screen gap-6 relative">
+      <div className="flex flex-col items-center p-8 w-screen gap-6">
         <div className="flex justify-between w-full print:hidden">
           <div className="font-bold text-[28px]">
             Payslips Table : {params.slug}
           </div>
         </div>
 
-        <AllPayslips payslips={payslips} />
+        <div className="flex justify-between w-4/5 fixed top-48">
+          <Button onClick={() => setIsAll(false)} variant={"destructive"}>
+            <ArrowLeft />
+          </Button>
 
-        <Button
-          onClick={() => setIsAll(false)}
-          className="absolute top-6 right-8"
-          variant={"destructive"}
-        >
-          Cancel
-        </Button>
+          <Button onClick={() => window.print()} variant={"default"}>
+            <Printer />
+          </Button>
+        </div>
+
+        <AllPayslips payslips={payslips} />
       </div>
     );
   }
