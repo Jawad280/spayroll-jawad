@@ -4,10 +4,15 @@ import { Button } from "@/components/ui/button";
 import { GetIndividualPayslip } from "@/lib/serverFunctions";
 import { Edit3Icon } from "lucide-react";
 import React, { useState } from "react";
+import Loading from "@/components/Loading";
 
 const page = ({ params }: { params: { slug: string } }) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const { payslip, error, isLoading } = GetIndividualPayslip(params.slug);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (isEdit) {
     return (

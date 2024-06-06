@@ -58,7 +58,7 @@ enum ContributionRate {
 model Employee {
   id                     String            @id @default(uuid())
   name                   String
-  NRIC                   String            @unique
+  NRIC                   String
   dob                    DateTime
   nationality            Nationality
   citizenshipStatus      CitizenshipStatus
@@ -79,6 +79,8 @@ model Employee {
   companyId String?
 
   payslips Payslip[]
+
+  @@unique([NRIC, companyId])
 }
 
 model Payslip {

@@ -7,6 +7,7 @@ import { columns } from "@/components/EmployeeTable/columns";
 import { Employee } from "@/types";
 import { GetAllEmployees } from "@/lib/serverFunctions";
 import { useUser } from "@/components/UserContext";
+import Loading from "@/components/Loading";
 
 const AllEmployees = () => {
   const user = useUser();
@@ -18,7 +19,9 @@ const AllEmployees = () => {
 
   const allEmployees: Employee[] = employees;
 
-  console.log(allEmployees);
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (isFormVisible) {
     return (

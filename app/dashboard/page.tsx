@@ -5,9 +5,9 @@ import { GetAllEmployees, GetCompanies } from "@/lib/serverFunctions";
 import { useUser } from "@/components/UserContext";
 import { Button } from "@/components/ui/button";
 import CreateCompany from "@/components/CreateCompany";
-import { User } from "@/types";
 import CompanyTable from "@/components/CompanyTable/CompanyTable";
 import { columns } from "@/components/CompanyTable/companyColumns";
+import Loading from "@/components/Loading";
 
 const Dashboard = () => {
   const user = useUser();

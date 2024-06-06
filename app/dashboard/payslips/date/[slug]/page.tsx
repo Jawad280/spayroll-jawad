@@ -1,5 +1,6 @@
 "use client";
 import AllPayslips from "@/components/AllPayslips";
+import Loading from "@/components/Loading";
 import { PayslipTable } from "@/components/PayslipTable/PayslipTable";
 import { columns } from "@/components/PayslipTable/columns";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,10 @@ import React, { useState } from "react";
 const page = ({ params }: { params: { slug: string } }) => {
   const { payslips, error, isLoading } = GetAllPayslips(params.slug);
   const [isAll, setIsAll] = useState<boolean>(false);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (isAll) {
     return (

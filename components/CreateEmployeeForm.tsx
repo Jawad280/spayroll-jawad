@@ -108,6 +108,7 @@ const CreateEmployeeForm = ({
         setIsFormVisible(false);
       } else {
         const errorMessage = await res.text();
+        console.log(errorMessage);
         alert(errorMessage);
       }
     } catch (e) {

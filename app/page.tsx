@@ -4,6 +4,7 @@ import SignupForm from "@/components/SignupForm";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/Loading";
 
 export default function Home() {
   const router = useRouter();
