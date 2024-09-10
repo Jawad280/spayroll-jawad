@@ -6,10 +6,12 @@ import { columns } from "@/components/PayslipTable/columns";
 import { Button } from "@/components/ui/button";
 import { GetAllPayslips } from "@/lib/serverFunctions";
 import { ArrowLeft, Printer } from "lucide-react";
+import { useUser } from "@/components/UserContext";
 import React, { useState } from "react";
 
 const PayslipsCompany = ({ params }: { params: { slug: string } }) => {
-  const { payslips, error, isLoading } = GetAllPayslips(params.slug);
+  const user = useUser();
+  const { payslips, error, isLoading } = GetAllPayslipsCompany(params.slug, user?.companyName || '');
   const [isAll, setIsAll] = useState<boolean>(false);
 
   if (isLoading) {

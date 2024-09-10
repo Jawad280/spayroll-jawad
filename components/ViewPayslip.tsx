@@ -157,7 +157,11 @@ const ViewPayslip = ({ payslip }: { payslip: Payslip }) => {
               Date of Payment
             </div>
             <div className="text-[12px]">
-              {new Date(payslip?.dateOfPayment || "").toLocaleDateString()}
+              {new Date(payslip?.dateOfPayment || "").toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              })}
             </div>
           </div>
 
