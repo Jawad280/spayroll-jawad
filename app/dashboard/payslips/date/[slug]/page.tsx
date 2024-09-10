@@ -4,7 +4,7 @@ import Loading from "@/components/Loading";
 import { PayslipTable } from "@/components/PayslipTable/PayslipTable";
 import { columns } from "@/components/PayslipTable/columns";
 import { Button } from "@/components/ui/button";
-import { GetAllPayslips } from "@/lib/serverFunctions";
+import { GetAllPayslipsCompany } from "@/lib/serverFunctions";
 import { ArrowLeft, Printer } from "lucide-react";
 import { useUser } from "@/components/UserContext";
 import React, { useState } from "react";
