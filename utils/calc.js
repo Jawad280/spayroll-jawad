@@ -54,6 +54,7 @@ function calculateCpf(ordinaryWage, additionalWage, result) {
 
     let totalContribution = (twRate*totalWage) + (tw500Rate*(totalWage-500)) + owPart + (awRate*additionalWage);
     console.log("total contribution : ", totalContribution, "percentages: ", result, "total wage: ", totalWage);
+    
     return totalContribution;
 }
 
