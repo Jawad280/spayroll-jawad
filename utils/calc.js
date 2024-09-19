@@ -15,11 +15,11 @@ function getCpfPercentages(age, totalWage, percentageData) {
 
     if (age <= 55) {
         ageGroup = '55_AND_BELOW';
-    } else if (age <= 60) {
+    } else if (age < 60) {
         ageGroup = 'ABOVE_55_TO_60';
-    } else if (age <= 65) {
+    } else if (age < 65) {
         ageGroup = 'ABOVE_60_TO_65';
-    } else if (age <= 70) {
+    } else if (age < 70) {
         ageGroup = 'ABOVE_65_TO_70';
     } else {
         ageGroup = 'ABOVE_70';
