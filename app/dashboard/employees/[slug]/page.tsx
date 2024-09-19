@@ -17,7 +17,7 @@ const EmployeePage = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div className="flex flex-col items-center p-8 w-screen gap-6">
-      <EditEmployeeForm employee={currentEmployee} companyName="TEST" />
+      <EditEmployeeForm employee={currentEmployee} companyName={currentEmployee?.companyName || ""} />
     </div>
   );
 };
